@@ -27,7 +27,7 @@ Assertion.addMethod('card_like', function (otherCard) {
       try {
         // Check ID is GUID
         new Assertion(cardObj.card.$.id).to.match(
-          /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}/
+          /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$/
         )
 
         // Finally check cards match, subject to normalisation
