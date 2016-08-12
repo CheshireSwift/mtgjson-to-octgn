@@ -1,12 +1,14 @@
 var xml = require('xml')
 var UUID = require('node-uuid')
 var _ = require('lodash')
+var leftPad = require('left-pad')
 
-var xmlProperty = (name, value) => (name && value && {
-  property: {
-    _attr: { name, value }
+var xmlProperty = (name, value, force) =>
+  name && (value || force) && {
+    property: {
+      _attr: { name, value }
+    }
   }
-})
 
 function translateCard(card) {
   var handle = {
@@ -29,35 +31,33 @@ function translateCard(card) {
       }
     },
     text: text => text.split('\n').join('\r\n'),
-    join: field => field.join(' '),
-    flavor: flavor => flavor && flavor.split('\n').join('')
+    join: (...fields) => _(fields).flatten().compact().join(' '),
+    flavor: flavor => flavor && flavor.split('\n').join(''),
+    ptBox: (power, toughness, loyalty) => loyalty || power && toughness && `${power} / ${toughness}`,
+    pad: (field, ...args) => field && leftPad(field, ...args)
   }
 
-  var rv = xml({
+  return xml({
     card: _.compact([
-      { _attr: { name: card.name, id: UUID.v4() + 'aaaa' } },
+      { _attr: { name: card.name, id: UUID.v4() } },
       xmlProperty('Cost',         card.manaCost),
-      xmlProperty('CMC',          card.cmc),
+      xmlProperty('CMC',          card.cmc || '0'),
       xmlProperty('Rarity',       card.rarity),
       xmlProperty('Power',        card.power),
       xmlProperty('Toughness',    card.toughness),
       xmlProperty('Artist',       card.artist),
       xmlProperty('MultiverseId', card.multiverseid),
-      xmlProperty('Number',       card.number),
       xmlProperty('Faction',      card.watermark),
 
-      xmlProperty('Type',         handle.join(card.types)),
+      xmlProperty('Number',       handle.pad(card.number, 3, 0)),
+      xmlProperty('Type',         handle.join(card.supertypes, card.types)),
       xmlProperty('Subtype',      handle.join(card.subtypes || [])),
       xmlProperty('Color',        handle.colors(card.manaCost, card.colors || [])),
-      xmlProperty('Rules',        handle.text(card.text)),
+      xmlProperty('Rules',        handle.text(card.text || ''), true),
       xmlProperty('Flavor',       handle.flavor(card.flavor)),
-
-      card.power !== undefined &&
-        card.toughness !== undefined &&
-        xmlProperty('PT Box',       `${card.power} / ${card.toughness}`)
+      xmlProperty('PT Box',       handle.ptBox(card.power, card.toughness, card.loyalty))
     ])
   })
-  return rv
 }
 
 module.exports = { card: translateCard }

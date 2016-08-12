@@ -42,6 +42,26 @@ describe('Translate', () => {
       var translatedCard = translate.card(testData.oneAndHybrid.json)
       expect(translatedCard).to.be.card_like(testData.oneAndHybrid.xml)
     })
+
+    it('should handle colourless mana symbols', () => {
+      var translatedCard = translate.card(testData.cosy.json)
+      expect(translatedCard).to.be.card_like(testData.cosy.xml)
+    })
+
+    it('should translate a vanilla creature correctly', () => {
+      var translatedCard = translate.card(testData.vanilla.json)
+      expect(translatedCard).to.be.card_like(testData.vanilla.xml)
+    })
+
+    it('should handle cards without mana costs', () => {
+      var translatedCard = translate.card(testData.costless.json)
+      expect(translatedCard).to.be.card_like(testData.costless.xml)
+    })
+
+    it('should translate a planeswalker card correctly', () => {
+      var translatedCard = translate.card(testData.walker.json)
+      expect(translatedCard).to.be.card_like(testData.walker.xml)
+    })
   })
 })
 
@@ -384,6 +404,180 @@ function getTestdata() {
           <property name="Flavor" value="During their ascent to spirithood, patriarchs of Orzhova shed both flesh and emotion. This earthly slag is collected and formed into thrulls." />
           <property name="Faction" value="Orzhov" />
           <property name="MultiverseId" value="96910" />
+        </card>
+      `
+    },
+    cosy: {
+      json: {
+        "artist": "Aleksi Briclot",
+        "cmc": 10,
+        "flavor": "A void as cryptic as reality itself.",
+        "id": "ab4de28fe8c2cd9ba2477b4a35f95c414ac01c86",
+        "imageName": "kozilek, the great distortion",
+        "layout": "normal",
+        "manaCost": "{8}{C}{C}",
+        "mciNumber": "4",
+        "multiverseid": 407514,
+        "name": "Kozilek, the Great Distortion",
+        "number": "4",
+        "power": "12",
+        "rarity": "Mythic Rare",
+        "subtypes": [
+          "Eldrazi"
+        ],
+        "supertypes": [
+          "Legendary"
+        ],
+        "text": "When you cast Kozilek, the Great Distortion, if you have fewer than seven cards in hand, draw cards equal to the difference.\nMenace\nDiscard a card with converted mana cost X: Counter target spell with converted mana cost X.",
+        "toughness": "12",
+        "type": "Legendary Creature \u2014 Eldrazi",
+        "types": [
+          "Creature"
+        ]
+      },
+      xml: `
+        <card name="Kozilek, the Great Distortion" id="a8649a97-1095-4d07-b672-dad79d500a25">
+          <property name="Cost" value="{8}{C}{C}" />
+          <property name="CMC" value="10" />
+          <property name="Color" value="Colorless" />
+          <property name="Type" value="Legendary Creature" />
+          <property name="Subtype" value="Eldrazi" />
+          <property name="Rarity" value="Mythic Rare" />
+          <property name="Rules" value="When you cast Kozilek, the Great Distortion, if you have fewer than seven cards in hand, draw cards equal to the difference.&#xD;&#xA;Menace&#xD;&#xA;Discard a card with converted mana cost X: Counter target spell with converted mana cost X." />
+          <property name="Power" value="12" />
+          <property name="Toughness" value="12" />
+          <property name="PT Box" value="12 / 12" />
+          <property name="Artist" value="Aleksi Briclot" />
+          <property name="Number" value="004" />
+          <property name="Flavor" value="A void as cryptic as reality itself." />
+          <property name="MultiverseId" value="407514" />
+        </card>
+      `
+    },
+    vanilla: {
+      json: {
+        "artist": "Una Fricker",
+        "cmc": 2,
+        "colorIdentity": [
+          "G"
+        ],
+        "colors": [
+          "Green"
+        ],
+        "flavor": "Don't try to outrun one of Dominaria's grizzlies; it'll catch you, knock you down, and eat you. Of course, you could run up a tree. In that case you'll get a nice view before it knocks the tree down and eats you.",
+        "id": "8e72dd2bde068e0ae899c34a3bcdef8811d2d572",
+        "imageName": "grizzly bears",
+        "layout": "normal",
+        "manaCost": "{1}{G}",
+        "mciNumber": "5e\/en\/163",
+        "multiverseid": 3984,
+        "name": "Grizzly Bears",
+        "power": "2",
+        "rarity": "Common",
+        "subtypes": [
+          "Bear"
+        ],
+        "toughness": "2",
+        "type": "Creature \u2014 Bear",
+        "types": [
+          "Creature"
+        ]
+      },
+      xml: `
+        <card name="Grizzly Bears" id="1c66b700-5eb4-8aad-a18e-d206711320cc">
+          <property name="Cost" value="{1}{G}" />
+          <property name="CMC" value="2" />
+          <property name="Color" value="Green" />
+          <property name="Type" value="Creature" />
+          <property name="Subtype" value="Bear" />
+          <property name="Rarity" value="Common" />
+          <property name="Rules" value="" />
+          <property name="Power" value="2" />
+          <property name="Toughness" value="2" />
+          <property name="PT Box" value="2 / 2" />
+          <property name="Artist" value="Una Fricker" />
+          <property name="Flavor" value="Don't try to outrun one of Dominaria's grizzlies; it'll catch you, knock you down, and eat you. Of course, you could run up a tree. In that case you'll get a nice view before it knocks the tree down and eats you." />
+          <property name="MultiverseId" value="3984" />
+        </card>
+      `
+    },
+    costless: {
+      json: {
+        "artist": "Mark Poole",
+        "colorIdentity": [
+          "U"
+        ],
+        "colors": [
+          "Blue"
+        ],
+        "id": "3be291e4d91ed1f068b9714eba2280a0aa8125b9",
+        "imageName": "ancestral vision",
+        "layout": "normal",
+        "mciNumber": "48",
+        "multiverseid": 113505,
+        "name": "Ancestral Vision",
+        "number": "48",
+        "rarity": "Rare",
+        "text": "Suspend 4\u2014{U} (Rather than cast this card from your hand, pay {U} and exile it with four time counters on it. At the beginning of your upkeep, remove a time counter. When the last is removed, cast it without paying its mana cost.)\nTarget player draws three cards.",
+        "type": "Sorcery",
+        "types": [
+          "Sorcery"
+        ]
+      },
+      xml: `
+        <card name="Ancestral Vision" id="a2c000f0-5763-404c-e09e-e2982c63f008">
+          <property name="CMC" value="0" />
+          <property name="Color" value="Blue" />
+          <property name="Type" value="Sorcery" />
+          <property name="Rarity" value="Rare" />
+          <property name="Rules" value="Suspend 4—{U} (Rather than cast this card from your hand, pay {U} and exile it with four time counters on it. At the beginning of your upkeep, remove a time counter. When the last is removed, cast it without paying its mana cost.)&#xD;&#xA;Target player draws three cards." />
+          <property name="Artist" value="Mark Poole" />
+          <property name="Number" value="048" />
+          <property name="MultiverseId" value="113505" />
+        </card>
+      `
+    },
+    walker: {
+      json: {
+        "artist": "Jason Chan",
+        "cmc": 4,
+        "colorIdentity": [
+          "U"
+        ],
+        "colors": [
+          "Blue"
+        ],
+        "id": "dfce9f7321bea625321a576376e480f854f7c9cb",
+        "imageName": "jace, the mind sculptor",
+        "layout": "normal",
+        "loyalty": 3,
+        "manaCost": "{2}{U}{U}",
+        "multiverseid": 195297,
+        "name": "Jace, the Mind Sculptor",
+        "number": "31",
+        "rarity": "Mythic Rare",
+        "subtypes": [
+          "Jace"
+        ],
+        "text": "+2: Look at the top card of target player's library. You may put that card on the bottom of that player's library.\n0: Draw three cards, then put two cards from your hand on top of your library in any order.\n\u22121: Return target creature to its owner's hand.\n\u221212: Exile all cards from target player's library, then that player shuffles his or her hand into his or her library.",
+        "type": "Planeswalker \u2014 Jace",
+        "types": [
+          "Planeswalker"
+        ]
+      },
+      xml: `
+        <card name="Jace, the Mind Sculptor" id="c003ec89-6e60-789b-d8f9-593d79828a77">
+          <property name="Cost" value="{2}{U}{U}" />
+          <property name="CMC" value="4" />
+          <property name="Color" value="Blue" />
+          <property name="Type" value="Planeswalker" />
+          <property name="Subtype" value="Jace" />
+          <property name="Rarity" value="Mythic Rare" />
+          <property name="Rules" value="+2: Look at the top card of target player's library. You may put that card on the bottom of that player's library.&#xD;&#xA;0: Draw three cards, then put two cards from your hand on top of your library in any order.&#xD;&#xA;−1: Return target creature to its owner's hand.&#xD;&#xA;−12: Exile all cards from target player's library, then that player shuffles his or her hand into his or her library." />
+          <property name="PT Box" value="3" />
+          <property name="Artist" value="Jason Chan" />
+          <property name="Number" value="031" />
+          <property name="MultiverseId" value="195297" />
         </card>
       `
     }
