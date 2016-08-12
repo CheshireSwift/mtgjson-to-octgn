@@ -13,8 +13,13 @@ describe('Translate', () => {
     })
 
     it('should translate a gold card correctly', () => {
-      var translatedCard = translate.card(testData.goldCard.json)
-      expect(translatedCard).to.be.card_like(testData.goldCard.xml)
+      var translatedCard = translate.card(testData.gold.json)
+      expect(translatedCard).to.be.card_like(testData.gold.xml)
+    })
+
+    it('should translate an colourless card (with watermark) correctly', () => {
+      var translatedCard = translate.card(testData.artifact.json)
+      expect(translatedCard).to.be.card_like(testData.artifact.xml)
     })
   })
 })
@@ -68,7 +73,7 @@ function getTestdata() {
         </card>
       `
     },
-    goldCard: {
+    gold: {
       json: {
         "artist": "Cyril Van Der Haegen",
         "cmc": 2,
@@ -118,6 +123,46 @@ function getTestdata() {
           <property name="Number" value="203" />
           <property name="Flavor" value="The scullers beneath Esper keep strixes as trained pets, and set them loose when a fare refuses to pay." />
           <property name="MultiverseId" value="175015" />
+        </card>
+      `
+    },
+    artifact: {
+      json: {
+        "artist": "John Avon",
+        "cmc": 3,
+        "colorIdentity": [
+          "U",
+          "R"
+        ],
+        "flavor": "\"What is it? Um . . . what do you want it to be?\"\n\u2014Juzba, Izzet tinker",
+        "id": "5d2a481c978cd399dcbb2f924ad082cb4aa65b4e",
+        "imageName": "mizzium transreliquat",
+        "layout": "normal",
+        "manaCost": "{3}",
+        "multiverseid": 107096,
+        "name": "Mizzium Transreliquat",
+        "number": "153",
+        "rarity": "Rare",
+        "text": "{3}: Mizzium Transreliquat becomes a copy of target artifact until end of turn.\n{1}{U}{R}: Mizzium Transreliquat becomes a copy of target artifact and gains this ability.",
+        "type": "Artifact",
+        "types": [
+          "Artifact"
+        ],
+        "watermark": "Izzet"
+      },
+      xml: `
+        <card name="Mizzium Transreliquat" id="41e005d1-3729-f138-8660-68f5f9ffa4a2">
+          <property name="Cost" value="{3}" />
+          <property name="CMC" value="3" />
+          <property name="Color" value="Colorless" />
+          <property name="Type" value="Artifact" />
+          <property name="Rarity" value="Rare" />
+          <property name="Rules" value="{3}: Mizzium Transreliquat becomes a copy of target artifact until end of turn.&#xD;&#xA;{1}{U}{R}: Mizzium Transreliquat becomes a copy of target artifact and gains this ability." />
+          <property name="Artist" value="John Avon" />
+          <property name="Number" value="153" />
+          <property name="Flavor" value="&quot;What is it? Um . . . what do you want it to be?&quot;—Juzba, Izzet tinker" />
+          <property name="Faction" value="Izzet" />
+          <property name="MultiverseId" value="107096" />
         </card>
       `
     }
