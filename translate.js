@@ -10,19 +10,27 @@ var xmlProperty = (name, value) => (name && value && {
 
 function translateCard(card) {
   var handle = {
-    colors: colors => {
+    colors: (manaCost, colors) => {
       switch (colors.length) {
         case 0:
           return 'Colorless'
         case 1:
           return _.first(colors)
         default:
-          return 'Multicolor ' + colors.join(' ')
+          var counts = _.countBy(manaCost)
+          var prefix = isGold(manaCost) ? 'Multicolor ' : 'Hybrid '
+          return prefix + _.sortBy(colors, c =>
+            manaCost.indexOf({ White: 'W', Blue: 'U', Black: 'B', Red: 'R', Green: 'G' }[c])
+          ).join(' ')
+      }
+
+      function isGold(manaCost) {
+        return _.uniq(manaCost.match(/\{[^0-9X]+?\}/g)).length !== 1
       }
     },
-    text: text => text.replace('\n', '\r\n'),
+    text: text => text.split('\n').join('\r\n'),
     join: field => field.join(' '),
-    flavor: flavor => flavor && flavor.replace('\n', '')
+    flavor: flavor => flavor && flavor.split('\n').join('')
   }
 
   var rv = xml({
@@ -40,7 +48,7 @@ function translateCard(card) {
 
       xmlProperty('Type',         handle.join(card.types)),
       xmlProperty('Subtype',      handle.join(card.subtypes || [])),
-      xmlProperty('Color',        handle.colors(card.colors || [])),
+      xmlProperty('Color',        handle.colors(card.manaCost, card.colors || [])),
       xmlProperty('Rules',        handle.text(card.text)),
       xmlProperty('Flavor',       handle.flavor(card.flavor)),
 

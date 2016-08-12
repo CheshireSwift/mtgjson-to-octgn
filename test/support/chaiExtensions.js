@@ -12,11 +12,17 @@ Assertion.addMethod('card_like', function (otherCard) {
 
   parseXml(card, function (e, cardObj) {
     // Check string is valid XML
-    if (e) throw e
+    if (e) {
+      e.message += ` (parsing card ${otherCard})`
+      throw e
+    }
 
     parseXml(otherCard, function (e, otherCardObj) {
       // Check other string is valid XML (silly)
-      if (e) throw e
+      if (e) {
+        e.message += ` (parsing card ${otherCard})`
+        throw e
+      }
 
       try {
         // Check ID is GUID
