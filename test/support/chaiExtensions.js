@@ -1,48 +1,66 @@
 'use strict'
 var _ = require('lodash')
 var parseXml = require('xml2js').parseString
-var Assertion = require('chai').Assertion
 
-Assertion.addMethod('card_like', function (otherCard) {
-  var card = this._obj
+module.exports = function(_chai, utils) {
+  var Assertion = _chai.Assertion
 
-  // Check we have correct data type
-  new Assertion(card).to.be.a('string')
+  Assertion.addMethod('match_xml', function (otherXml, assertions, normalise) {
+    var thisXml = this._obj
+    var negate = utils.flag(this, 'negate')
 
+    // Check we have correct data type
+    new Assertion(thisXml).to.be.a('string')
 
-  parseXml(card, function (e, cardObj) {
-    // Check string is valid XML
-    if (e) {
-      e.message += ` (parsing card ${otherCard})`
-      throw e
-    }
-
-    parseXml(otherCard, function (e, otherCardObj) {
-      // Check other string is valid XML (silly)
+    parseXml(thisXml, function (e, thisXmlObj) {
+      // Check string is valid XML
       if (e) {
-        e.message += ` (parsing card ${otherCard})`
+        e.message += ` (parsing xml ${thisXml})`
         throw e
       }
 
-      try {
-        // Check ID is GUID
-        new Assertion(cardObj.card.$.id).to.match(
-          /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$/
-        )
+      parseXml(otherXml, function (e, otherXmlObj) {
+        // Check other string is valid XML (silly)
+        if (e) {
+          e.message += ` (parsing xml ${otherXml})`
+          throw e
+        }
 
-        // Finally check cards match, subject to normalisation
-        normaliseCardObj(cardObj)
-        normaliseCardObj(otherCardObj)
-        new Assertion(cardObj).to.eql(otherCardObj)
-      } catch (e) {
-        e.message = 'XML structure did not match OCTGN card object: ' + e.message
-        throw e
-      }
+        try {
+          if (assertions) {
+            assertions(thisXmlObj, otherXmlObj)
+          }
+
+          if (normalise) {
+            thisXmlObj = normalise(thisXmlObj)
+            otherXmlObj = normalise(otherXmlObj)
+          }
+
+          if (negate) {
+            new Assertion(thisXmlObj).to.not.eql(otherXmlObj)
+          } else {
+            new Assertion(thisXmlObj).to.eql(otherXmlObj)
+          }
+        } catch (e) {
+          e.message = 'XML structure did not match object: ' + e.message
+          throw e
+        }
+      })
     })
   })
-})
 
-function normaliseCardObj(cardObj) {
-  cardObj.card.$.id = '(id removed)'
-  cardObj.card.property = _.orderBy(cardObj.card.property, '$.name')
+  Assertion.addMethod('card_like', function (otherCard) {
+    var card = this._obj
+    new Assertion(card).to.match_xml(otherCard, function(cardObj, otherCardObj) {
+      // Check ID is GUID
+      new Assertion(cardObj.card.$.id).to.match(
+        /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$/
+      )
+    }, normaliseCardObj)
+  })
+
+  function normaliseCardObj(cardObj) {
+    cardObj.card.$.id = '(id removed)'
+    cardObj.card.property = _.orderBy(cardObj.card.property, '$.name')
+  }
 }

@@ -1,5 +1,6 @@
-require('./support/chaiExtensions')
-var expect = require('chai').expect
+var chai = require('chai')
+var expect = chai.expect
+chai.use(require('./support/chaiExtensions'))
 
 var testData = require('./testData')
 
@@ -7,7 +8,6 @@ describe('Translate', () => {
   var translate = require('../translate.js')
 
   describe('#card', () => {
-
     it('should translate a card correctly', () => {
       var translatedCard = translate.card(testData.card.json)
       expect(translatedCard).to.be.card_like(testData.card.xml)
