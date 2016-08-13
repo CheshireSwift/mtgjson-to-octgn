@@ -17,8 +17,9 @@
     "xml2js": "^0.4.17"
   },
   "scripts": {
+    "start": "node .",
     "test": "mocha"
   },
-  "author": "",
+  "author": "Sam Collard",
   "license": "ISC"
 }
