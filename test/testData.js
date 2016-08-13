@@ -512,5 +512,70 @@ module.exports = {
     <property name="MultiverseId" value="195297" />
     </card>
     `
+  },
+  oldBooster: {
+    json: [
+      "rare",
+      "uncommon",
+      "uncommon",
+      "uncommon",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common"
+    ],
+    xml: `
+    <pack name="Booster" id="d1b52d67-ca19-4df6-9e3f-ae8862b05946">
+      <pick qty="1" key="Rarity" value="Rare" />
+      <pick qty="3" key="Rarity" value="Uncommon" />
+      <pick qty="11" key="Rarity" value="Common" />
+    </pack>
+    `
+  },
+  modernBooster: {
+    json: [
+      [
+        "rare",
+        "mythic rare"
+      ],
+      "uncommon",
+      "uncommon",
+      "uncommon",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "common",
+      "land",
+      "marketing"
+    ],
+    xml: `
+    <pack name="Booster" id="de4514d3-08c2-4f73-8c49-b8d5ddd099e4">
+      <options>
+        <option probability="0.125">
+          <pick qty="1" key="Rarity" value="Mythic Rare" />
+        </option>
+        <option probability="0.875">
+          <pick qty="1" key="Rarity" value="Rare" />
+        </option>
+      </options>
+      <pick qty="3" key="Rarity" value="Uncommon" />
+      <pick qty="10" key="Rarity" value="Common" />
+      <pick qty="1" key="Rarity" value="Basic Land" />
+    </pack>
+    `
   }
 }
+

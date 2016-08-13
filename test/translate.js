@@ -64,5 +64,12 @@ describe('Translate', () => {
       expect(translatedCard).to.be.card_like(testData.walker.xml)
     })
   })
+
+  describe('#booster', () => {
+    it('translates old/simple packs correctly', () => {
+      var translatedBooster = translate.booster(testData.oldBooster.json)
+      expect(translatedBooster).to.be.booster_like(testData.oldBooster.xml)
+    })
+  })
 })
 

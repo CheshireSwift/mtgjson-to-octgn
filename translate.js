@@ -60,5 +60,18 @@ function translateCard(card) {
   })
 }
 
-module.exports = { card: translateCard }
+function translateBooster(booster) {
+  return xml({
+    pack:
+      _(booster)
+        .countBy()
+        .map(function (count, rarity) {
+          return { pick: [ { _attr: { qty: count, key: 'Rarity', value: _.capitalize(rarity) } } ] }
+        })
+        .concat({ _attr: { name: 'Booster', id: UUID.v4() } })
+        .value()
+  })
+}
+
+module.exports = { card: translateCard, booster: translateBooster }
 

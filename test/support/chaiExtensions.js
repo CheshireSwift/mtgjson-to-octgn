@@ -49,18 +49,25 @@ module.exports = function(_chai, utils) {
     })
   })
 
-  Assertion.addMethod('card_like', function (otherCard) {
-    var card = this._obj
-    new Assertion(card).to.match_xml(otherCard, function(cardObj, otherCardObj) {
+  Assertion.addMethod('octgn_like', function (otherObj, identifiedTag, subtags, orderAttr) {
+    var obj = this._obj
+    new Assertion(obj).to.match_xml(otherObj, function(obj, otherObj) {
       // Check ID is GUID
-      new Assertion(cardObj.card.$.id).to.match(
+      new Assertion(obj[identifiedTag].$.id).to.match(
         /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$/
       )
-    }, normaliseCardObj)
+    }, function (someObj) {
+      someObj[identifiedTag].$.id = '(id removed)'
+      someObj[identifiedTag][subtags] = _.orderBy(someObj[identifiedTag][subtags], '$.' + orderAttr)
+    })
   })
 
-  function normaliseCardObj(cardObj) {
-    cardObj.card.$.id = '(id removed)'
-    cardObj.card.property = _.orderBy(cardObj.card.property, '$.name')
+  function octgnAssertionMethod(identifiedTag, subtags, orderAttr) {
+    return function(other) {
+      new Assertion(this._obj).to.octgn_like(other, identifiedTag, subtags, orderAttr)
+    }
   }
+
+  Assertion.addMethod('card_like', octgnAssertionMethod('card', 'property', 'name'))
+  Assertion.addMethod('booster_like', octgnAssertionMethod('pack', 'pick', 'qty'))
 }
