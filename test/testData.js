@@ -685,34 +685,6 @@ module.exports = {
             "Creature"
           ],
           "watermark": "Abzan"
-        },
-        {
-          "artist": "Adam Paquette",
-          "colorIdentity": [
-            "G"
-          ],
-          "id": "4cca0916e7f6c8a101cac472376342a046470ce7",
-          "imageName": "forest4",
-          "layout": "normal",
-          "multiverseid": 386543,
-          "name": "Forest",
-          "number": "269",
-          "rarity": "Basic Land",
-          "subtypes": [
-            "Forest"
-          ],
-          "supertypes": [
-            "Basic"
-          ],
-          "type": "Basic Land \u2014 Forest",
-          "types": [
-            "Land"
-          ],
-          "variations": [
-            386540,
-            386541,
-            386542
-          ]
         }
       ]
     }
@@ -723,11 +695,11 @@ module.exports = {
       <packaging>
         <pack name="Booster" id="b0a29b96-465c-43ff-bdaf-10690091b859">
           <options>
-            <option probability="0.125">
-              <pick qty="1" key="Rarity" value="Mythic Rare" />
-            </option>
             <option probability="0.875">
               <pick qty="1" key="Rarity" value="Rare" />
+            </option>
+            <option probability="0.125">
+              <pick qty="1" key="Rarity" value="Mythic Rare" />
             </option>
           </options>
           <pick qty="3" key="Rarity" value="Uncommon" />
@@ -769,18 +741,6 @@ module.exports = {
           <property name="Flavor" value="The fastest way across the dunes is above." />
           <property name="Faction" value="Abzan" />
           <property name="MultiverseId" value="386468" />
-        </card>
-        <card name="Forest" id="2c5cba3e-1046-4f7c-9f1e-7ec4974d9f1d">
-          <property name="CMC" value="0" />
-          <property name="Color" value="Colorless" />
-          <property name="Type" value="Basic Land" />
-          <property name="Subtype" value="Forest" />
-          <property name="Rarity" value="Basic Land" />
-          <property name="Rules" value="G" />
-          <property name="Artist" value="Adam Paquette" />
-          <property name="Number" value="269" />
-          <property name="MultiverseId" value="386543" />
-          <property name="Flags" value="G" />
         </card>
       </cards>
     </set>

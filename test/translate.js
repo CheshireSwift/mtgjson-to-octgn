@@ -76,5 +76,12 @@ describe('Translate', () => {
       expect(translatedBooster).to.be.booster_like(testData.modernBooster.xml)
     })
   })
+
+  describe('#set', () => {
+    it('is set for life', () => {
+      var translatedSet = translate.set(testData.set.json)
+      expect(translatedSet).to.be.set_like(testData.set.xml)
+    })
+  })
 })
 

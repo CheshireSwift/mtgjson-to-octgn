@@ -37,7 +37,7 @@ function translateCard(card) {
     pad: (field, ...args) => field && leftPad(field, ...args)
   }
 
-  return xml({
+  return {
     card: _.compact([
       { _attr: { name: card.name, id: UUID.v4() } },
       xmlProperty('Cost',         card.manaCost),
@@ -57,7 +57,7 @@ function translateCard(card) {
       xmlProperty('Flavor',       handle.flavor(card.flavor)),
       xmlProperty('PT Box',       handle.ptBox(card.power, card.toughness, card.loyalty))
     ])
-  })
+  }
 }
 
 function translateBooster(booster) {
@@ -77,13 +77,13 @@ function translateBooster(booster) {
     }))
   }))
 
-  return xml({
+  return {
     pack: _.concat(
       { _attr: { name: 'Booster', id: UUID.v4() } },
       picks,
       optionGroups
     )
-  })
+  }
 
   function boosterPick(count, rawRarity) {
     var rarity = mapRarity(rawRarity)
@@ -121,5 +121,24 @@ function translateBooster(booster) {
   }
 }
 
-module.exports = { card: translateCard, booster: translateBooster }
+function translateSet(set) {
+  var attrs = {
+    _attr: {
+      name: set.name,
+      id: UUID.v4(),
+      gameId: 'A6C8D2E8-7CD8-11DD-8F94-E62B56D89593',
+      gameVersion: '3.3.0.0',
+      version: '1.0'
+    }
+  }
+  var packaging = { packaging: [translateBooster(set.booster)] }
+  var cards = { cards: _.map(set.cards, translateCard) }
+  return { set: [ attrs, packaging, cards ] }
+}
+
+module.exports = {
+  card: _.flow(translateCard, xml),
+  booster: _.flow(translateBooster, xml),
+  set: _.flow(translateSet, xml)
+}
 

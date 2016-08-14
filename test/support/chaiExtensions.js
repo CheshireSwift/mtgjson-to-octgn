@@ -2,6 +2,8 @@
 var _ = require('lodash')
 var parseXml = require('xml2js').parseString
 
+const GUID_REGEX = /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$/
+
 module.exports = function(_chai, utils) {
   var Assertion = _chai.Assertion
 
@@ -12,14 +14,20 @@ module.exports = function(_chai, utils) {
     // Check we have correct data type
     new Assertion(thisXml).to.be.a('string')
 
-    parseXml(thisXml, function (e, thisXmlObj) {
+    parseXml(thisXml, {
+      mergeAttrs: true,
+      explicitArray: false
+    }, function (e, thisXmlObj) {
       // Check string is valid XML
       if (e) {
         e.message += ` (parsing xml ${thisXml})`
         throw e
       }
 
-      parseXml(otherXml, function (e, otherXmlObj) {
+      parseXml(otherXml, {
+        mergeAttrs: true,
+        explicitArray: false
+      }, function (e, otherXmlObj) {
         // Check other string is valid XML (silly)
         if (e) {
           e.message += ` (parsing xml ${otherXml})`
@@ -53,12 +61,31 @@ module.exports = function(_chai, utils) {
     var obj = this._obj
     new Assertion(obj).to.match_xml(otherObj, function(obj, otherObj) {
       // Check ID is GUID
-      new Assertion(obj[identifiedTag].$.id).to.match(
-        /^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$/
-      )
+      new Assertion(obj[identifiedTag].id).to.match(GUID_REGEX)
     }, function (someObj) {
-      someObj[identifiedTag].$.id = '(id removed)'
-      someObj[identifiedTag][subtags] = _.orderBy(someObj[identifiedTag][subtags], '$.' + orderAttr)
+      someObj[identifiedTag].id = '(id removed)'
+      _.set(someObj[identifiedTag], subtags,
+        _.orderBy(
+          _.get(someObj[identifiedTag], subtags),
+          orderAttr
+        )
+      )
+    })
+  })
+
+  Assertion.addMethod('set_like', function (otherSet) {
+    var thisSet = this._obj
+    new Assertion(thisSet).to.match_xml(otherSet, function(thisSet) {
+      new Assertion(thisSet.set.id).to.match(GUID_REGEX)
+    }, function(setContainer) {
+      var set = setContainer.set
+      set.id = '(id removed)'
+      set.cards.card = _.orderBy(set.cards.card, 'name')
+      _.forEach(set.cards.card, function(card) {
+        card.property = _.orderBy(card.property, 'name')
+        card.id = '(id removed)'
+      })
+      set.packaging.pack.id = '(id removed)'
     })
   })
 
