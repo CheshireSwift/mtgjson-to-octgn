@@ -32,8 +32,8 @@ module.exports = function(_chai, utils) {
           }
 
           if (normalise) {
-            thisXmlObj = normalise(thisXmlObj)
-            otherXmlObj = normalise(otherXmlObj)
+            normalise(thisXmlObj)
+            normalise(otherXmlObj)
           }
 
           if (negate) {
