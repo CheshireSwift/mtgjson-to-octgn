@@ -564,11 +564,11 @@ module.exports = {
     xml: `
     <pack name="Booster" id="de4514d3-08c2-4f73-8c49-b8d5ddd099e4">
       <options>
-        <option probability="0.125">
-          <pick qty="1" key="Rarity" value="Mythic Rare" />
-        </option>
         <option probability="0.875">
           <pick qty="1" key="Rarity" value="Rare" />
+        </option>
+        <option probability="0.125">
+          <pick qty="1" key="Rarity" value="Mythic Rare" />
         </option>
       </options>
       <pick qty="3" key="Rarity" value="Uncommon" />

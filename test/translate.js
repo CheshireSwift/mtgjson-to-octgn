@@ -70,6 +70,11 @@ describe('Translate', () => {
       var translatedBooster = translate.booster(testData.oldBooster.json)
       expect(translatedBooster).to.be.booster_like(testData.oldBooster.xml)
     })
+
+    it('translates recent packs correctly', () => {
+      var translatedBooster = translate.booster(testData.modernBooster.json)
+      expect(translatedBooster).to.be.booster_like(testData.modernBooster.xml)
+    })
   })
 })
 

@@ -61,16 +61,64 @@ function translateCard(card) {
 }
 
 function translateBooster(booster) {
+  var [simplePicks, pickGroups] = _.partition(booster, e => typeof e === 'string')
+  var picks = _(simplePicks)
+    .countBy()
+    .map(boosterPick)
+    .compact()
+    .value()
+
+  var optionGroups = _.map(pickGroups, optionGroup => ({
+    options: _.map(optionGroup, optionPick => ({
+      option: [
+        { _attr: { probability: probability(optionGroup, optionPick) } },
+        boosterPick(1, optionPick)
+      ]
+    }))
+  }))
+
   return xml({
-    pack:
-      _(booster)
-        .countBy()
-        .map(function (count, rarity) {
-          return { pick: [ { _attr: { qty: count, key: 'Rarity', value: _.capitalize(rarity) } } ] }
-        })
-        .concat({ _attr: { name: 'Booster', id: UUID.v4() } })
-        .value()
+    pack: _.concat(
+      { _attr: { name: 'Booster', id: UUID.v4() } },
+      picks,
+      optionGroups
+    )
   })
+
+  function boosterPick(count, rawRarity) {
+    var rarity = mapRarity(rawRarity)
+    if (!rarity) return
+
+    return {
+      pick: [
+        { _attr: { qty: count, key: 'Rarity', value: rarity } }
+      ]
+    }
+  }
+
+  function mapRarity(jsonRarity) {
+    switch (jsonRarity) {
+      case 'land':
+        return 'Basic Land'
+      case 'marketing':
+        // Drop non-playable cards
+        return
+      default:
+        return _(jsonRarity)
+          .split(' ')
+          .map(_.capitalize)
+          .join(' ')
+    }
+  }
+
+  function probability(optionGroup, optionPick) {
+    // Handle the typical rare/mythic rare case semi-intelligently, otherwise assume evens.
+    if (optionGroup.length === 2) {
+      return optionPick === 'mythic rare' ? 0.125 : 0.875
+    } else {
+      return 1/optionGroup.length
+    }
+  }
 }
 
 module.exports = { card: translateCard, booster: translateBooster }
