@@ -576,6 +576,215 @@ module.exports = {
       <pick qty="1" key="Rarity" value="Basic Land" />
     </pack>
     `
+  },
+  set: {
+    json: {
+      "name": "Khans of Tarkir",
+      "code": "KTK",
+      "magicCardsInfoCode": "ktk",
+      "releaseDate": "2014-09-26",
+      "border": "black",
+      "type": "expansion",
+      "block": "Khans of Tarkir",
+      "booster": [
+        [
+          "rare",
+          "mythic rare"
+        ],
+        "uncommon",
+        "uncommon",
+        "uncommon",
+        "common",
+        "common",
+        "common",
+        "common",
+        "common",
+        "common",
+        "common",
+        "common",
+        "common",
+        "common",
+        "land",
+        "marketing"
+      ],
+      "translations": {
+        "de": "Khane von Tarkir",
+        "fr": "Les Khans de Tarkir",
+        "it": "I Khan di Tarkir",
+        "es": "Kans de Tarkir",
+        "pt": "Khans de Tarkir",
+        "jp": "\u30bf\u30eb\u30ad\u30fc\u30eb\u8987\u738b\u8b5a",
+        "cn": "\u9791\u5951\u53ef\u6c57",
+        "ru": "\u0425\u0430\u043d\u044b \u0422\u0430\u0440\u043a\u0438\u0440\u0430",
+        "tw": "\u97c3\u5951\u53ef\u6c57",
+        "ko": "\ud0c0\ub974\ucee4\uc758 \uce78"
+      },
+      "mkm_name": "Khans of Tarkir",
+      "mkm_id": 1495,
+      "cards": [
+        {
+          "artist": "Chris Rahn",
+          "cmc": 4,
+          "colorIdentity": [
+            "W"
+          ],
+          "colors": [
+            "White"
+          ],
+          "flavor": "\"Wherever I walk, the ancestors walk too.\"",
+          "id": "4780309135c0f3c1b95ee6890224f756882411a2",
+          "imageName": "abzan battle priest",
+          "layout": "normal",
+          "manaCost": "{3}{W}",
+          "mciNumber": "1",
+          "multiverseid": 386466,
+          "name": "Abzan Battle Priest",
+          "number": "1",
+          "power": "3",
+          "rarity": "Uncommon",
+          "subtypes": [
+            "Human",
+            "Cleric"
+          ],
+          "text": "Outlast {W} ({W}, {T}: Put a +1\/+1 counter on this creature. Outlast only as a sorcery.)\nEach creature you control with a +1\/+1 counter on it has lifelink.",
+          "toughness": "2",
+          "type": "Creature \u2014 Human Cleric",
+          "types": [
+            "Creature"
+          ],
+          "watermark": "Abzan"
+        },
+        {
+          "artist": "Steven Belledin",
+          "cmc": 3,
+          "colorIdentity": [
+            "W"
+          ],
+          "colors": [
+            "White"
+          ],
+          "flavor": "The fastest way across the dunes is above.",
+          "id": "b7ee22963838e54d2b74d64ca3296905122bdc3a",
+          "imageName": "abzan falconer",
+          "layout": "normal",
+          "manaCost": "{2}{W}",
+          "mciNumber": "2",
+          "multiverseid": 386468,
+          "name": "Abzan Falconer",
+          "number": "2",
+          "power": "2",
+          "rarity": "Uncommon",
+          "subtypes": [
+            "Human",
+            "Soldier"
+          ],
+          "text": "Outlast {W} ({W}, {T}: Put a +1\/+1 counter on this creature. Outlast only as a sorcery.)\nEach creature you control with a +1\/+1 counter on it has flying.",
+          "toughness": "3",
+          "type": "Creature \u2014 Human Soldier",
+          "types": [
+            "Creature"
+          ],
+          "watermark": "Abzan"
+        },
+        {
+          "artist": "Adam Paquette",
+          "colorIdentity": [
+            "G"
+          ],
+          "id": "4cca0916e7f6c8a101cac472376342a046470ce7",
+          "imageName": "forest4",
+          "layout": "normal",
+          "multiverseid": 386543,
+          "name": "Forest",
+          "number": "269",
+          "rarity": "Basic Land",
+          "subtypes": [
+            "Forest"
+          ],
+          "supertypes": [
+            "Basic"
+          ],
+          "type": "Basic Land \u2014 Forest",
+          "types": [
+            "Land"
+          ],
+          "variations": [
+            386540,
+            386541,
+            386542
+          ]
+        }
+      ]
+    }
+    ,
+    xml: `
+    <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+    <set name="Khans of Tarkir" id="81a3839a-d590-4843-82dc-c2ee1f002db6" gameId="A6C8D2E8-7CD8-11DD-8F94-E62B56D89593" gameVersion="3.3.0.0" version="1.0">
+      <packaging>
+        <pack name="Booster" id="b0a29b96-465c-43ff-bdaf-10690091b859">
+          <options>
+            <option probability="0.125">
+              <pick qty="1" key="Rarity" value="Mythic Rare" />
+            </option>
+            <option probability="0.875">
+              <pick qty="1" key="Rarity" value="Rare" />
+            </option>
+          </options>
+          <pick qty="3" key="Rarity" value="Uncommon" />
+          <pick qty="10" key="Rarity" value="Common" />
+          <pick qty="1" key="Rarity" value="Basic Land" />
+        </pack>
+      </packaging>
+      <cards>
+        <card name="Abzan Battle Priest" id="ec51ae35-3ec2-4702-945a-0c12af9df3f0">
+          <property name="Cost" value="{3}{W}" />
+          <property name="CMC" value="4" />
+          <property name="Color" value="White" />
+          <property name="Type" value="Creature" />
+          <property name="Subtype" value="Human Cleric" />
+          <property name="Rarity" value="Uncommon" />
+          <property name="Rules" value="Outlast {W} ({W}, {T}: Put a +1/+1 counter on this creature. Outlast only as a sorcery.)&#xD;&#xA;Each creature you control with a +1/+1 counter on it has lifelink." />
+          <property name="Power" value="3" />
+          <property name="Toughness" value="2" />
+          <property name="PT Box" value="3 / 2" />
+          <property name="Artist" value="Chris Rahn" />
+          <property name="Number" value="001" />
+          <property name="Flavor" value="&quot;Wherever I walk, the ancestors walk too.&quot;" />
+          <property name="Faction" value="Abzan" />
+          <property name="MultiverseId" value="386466" />
+        </card>
+        <card name="Abzan Falconer" id="569fd2d8-71b5-43e0-a490-1be54a84621a">
+          <property name="Cost" value="{2}{W}" />
+          <property name="CMC" value="3" />
+          <property name="Color" value="White" />
+          <property name="Type" value="Creature" />
+          <property name="Subtype" value="Human Soldier" />
+          <property name="Rarity" value="Uncommon" />
+          <property name="Rules" value="Outlast {W} ({W}, {T}: Put a +1/+1 counter on this creature. Outlast only as a sorcery.)&#xD;&#xA;Each creature you control with a +1/+1 counter on it has flying." />
+          <property name="Power" value="2" />
+          <property name="Toughness" value="3" />
+          <property name="PT Box" value="2 / 3" />
+          <property name="Artist" value="Steven Belledin" />
+          <property name="Number" value="002" />
+          <property name="Flavor" value="The fastest way across the dunes is above." />
+          <property name="Faction" value="Abzan" />
+          <property name="MultiverseId" value="386468" />
+        </card>
+        <card name="Forest" id="2c5cba3e-1046-4f7c-9f1e-7ec4974d9f1d">
+          <property name="CMC" value="0" />
+          <property name="Color" value="Colorless" />
+          <property name="Type" value="Basic Land" />
+          <property name="Subtype" value="Forest" />
+          <property name="Rarity" value="Basic Land" />
+          <property name="Rules" value="G" />
+          <property name="Artist" value="Adam Paquette" />
+          <property name="Number" value="269" />
+          <property name="MultiverseId" value="386543" />
+          <property name="Flags" value="G" />
+        </card>
+      </cards>
+    </set>
+    `
   }
 }
 
