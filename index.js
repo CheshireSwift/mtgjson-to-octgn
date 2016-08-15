@@ -12,11 +12,15 @@ program
   .action(m => method = m)
   .parse(process.argv)
 
+var pipedInput = ''
 process.stdin.resume()
 process.stdin.setEncoding('utf8')
-process.stdin.on('data', _.flow(
-  JSON.parse,
-  translate[method],
-  x => process.stdout.write(x)
-))
+process.stdin.on('data', data => pipedInput += data)
+process.stdin.on('end', () =>
+  process.stdout.write(
+    translate[method](
+      JSON.parse(pipedInput)
+    )
+  )
+)
 
